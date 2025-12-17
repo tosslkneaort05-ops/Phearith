@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>High/Low Game</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; }
+        .btn { padding: 15px 30px; font-size: 18px; margin: 10px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+        .btn:hover { background: #0056b3; }
+        #result { font-size: 24px; font-weight: bold; margin-top: 20px; color: green; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>ល្បែងទាយ លេខខ្ពស់/ទាប</h1>
+        <p>ពិន្ទុរបស់អ្នក: <span id="balance" style="color:red; font-weight:bold;">1000</span> $</p>
+        
+        <h3>តើលេខបន្ទាប់ នឹងធំជាង ឬតូចជាង 5?</h3>
+        <button class="btn" onclick="play('low')">ទាបជាង 5</button>
+        <button class="btn" onclick="play('high')">ខ្ពស់ជាង 5</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let balance = 1000;
+        let betAmount = 100; 
+
+        function play(userChoice) {
+            let randomNumber = Math.floor(Math.random() * 11);
+            let message = "";
+            let color = "black";
+
+            let isWin = false;
+            if (userChoice === 'low' && randomNumber < 5) isWin = true;
+            else if (userChoice === 'high' && randomNumber > 5) isWin = true;
+
+            if (isWin) {
+                balance += betAmount; 
+                message = `🎉 ឈ្នះ! លេខចេញ: ${randomNumber}. ពិន្ទុនៅសល់: ${balance}$`;
+                color = "green";
+            } else {
+                balance -= betAmount; 
+                message = `❌ ចាញ់! លេខចេញ: ${randomNumber}. ពិន្ទុនៅសល់: ${balance}$`;
+                color = "red";
+            }
+
+            let resultDiv = document.getElementById("result");
+            resultDiv.innerText = message;
+            resultDiv.style.color = color;
+            document.getElementById("balance").innerText = balance;
+        }
+    </script>
+</body>
+</html>
